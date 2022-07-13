@@ -101,8 +101,8 @@ class KioskSidebar extends LitElement {
 
     _renderMenu(sidebarMenu) {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
-            console.log("htmlMenu", sidebarMenu);
-            console.log("htmlMenu", sidebarMenu.menu);
+            console.log("htmlMenu", "sidebarMenu", sidebarMenu);
+            console.log("htmlMenu", "sidebarMenu.menu", sidebarMenu.menu);
 
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
