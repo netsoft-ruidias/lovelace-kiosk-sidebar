@@ -115,8 +115,11 @@ class KioskSidebar extends LitElement {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
+            const menuElement = document.createElement("div");
+            menuElement.innerHTML = htmlMenu.getHTML();
+
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
-            sidebarInner.appendChild(htmlMenu);
+            sidebarInner.appendChild(menuElement);
         }
     }
 
