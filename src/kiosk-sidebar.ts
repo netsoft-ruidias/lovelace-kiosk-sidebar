@@ -8,7 +8,7 @@ const KIOSK_SIDEBAR_VERSION = '1.0.0.0';
 import { css, html, LitElement } from 'lit-element';
 import { moreInfo } from 'card-tools/src/more-info';
 import { hass, provideHass } from 'card-tools/src/hass';
-import { subscribeRenderTemplate } from 'card-tools/src/templates';
+//import { subscribeRenderTemplate } from 'card-tools/src/templates';
 import { forwardHaptic, getLovelace, navigate, toggleEntity } from 'custom-card-helpers';
 
 class KioskSidebar extends LitElement {
@@ -19,17 +19,7 @@ class KioskSidebar extends LitElement {
     config: any;
     hass: any;
     shadowRoot: any;
-    //renderCard: any;
-    templateLines: any = [];
-
-    twelveHourVersion = false;
-    period = false;
-    dateFormat = 'DD MMMM';
-
-    bottomCard: any = null;
-
     cards: any = {};
-
     CUSTOM_TYPE_PREFIX = 'custom:';
 
     /* **************************************** *
@@ -57,13 +47,13 @@ class KioskSidebar extends LitElement {
      * **************************************** */
 
     render() {
-        const sidebarMenu = this.config.sidebarMenu;
+        // const sidebarMenu = this.config.sidebarMenu;
         const addStyle = 'style' in this.config;
 
-        this.twelveHourVersion = this.config.twelveHourVersion ? this.config.twelveHourVersion : false;
-        this.period = this.config.period ? this.config.period : false;
-        this.dateFormat = this.config.dateFormat ? this.config.dateFormat : 'DD MMMM';
-        this.bottomCard = this.config.bottomCard ? this.config.bottomCard : null;
+        // this.twelveHourVersion = this.config.twelveHourVersion ? this.config.twelveHourVersion : false;
+        // this.period = this.config.period ? this.config.period : false;
+        // this.dateFormat = this.config.dateFormat ? this.config.dateFormat : 'DD MMMM';
+        // this.bottomCard = this.config.bottomCard ? this.config.bottomCard : null;
 
         this.cards = this.config.cards && this.config.cards.length > 0 ? this.config.cards : null;
 
@@ -112,9 +102,13 @@ class KioskSidebar extends LitElement {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
-            const menuElement = document.createElement("ul");
+            const menuElement = document.createElement(`ul`);
             menuElement.classList.add( "sidebarMenu" );
-            menuElement.innerHTML = htmlMenu.getHTML();
+
+            console.log("htmlMenu", htmlMenu.getHTML());
+
+            menuElement.insertAdjacentHTML("beforeend", htmlMenu.getHTML());
+            //menuElement.innerHTML = htmlMenu.getHTML();
 
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
             sidebarInner.appendChild(menuElement);
@@ -247,22 +241,22 @@ class KioskSidebar extends LitElement {
     setConfig(config) {
         this.config = config;
 
-        if (this.config.template) {
-            subscribeRenderTemplate(
-                null,
-                (res) => {
-                    this.templateLines = res.match(/<li>([^]*?)<\/li>/g).map(function (val) {
-                        return val.replace(/<\/?li>/g, '');
-                    });
-                    this.requestUpdate();
-                },
-                {
-                    template: this.config.template,
-                    variables: { config: this.config },
-                    entity_ids: this.config.entity_ids,
-                }
-            );
-        }
+        // if (this.config.template) {
+        //     subscribeRenderTemplate(
+        //         null,
+        //         (res) => {
+        //             this.templateLines = res.match(/<li>([^]*?)<\/li>/g).map(function (val) {
+        //                 return val.replace(/<\/?li>/g, '');
+        //             });
+        //             this.requestUpdate();
+        //         },
+        //         {
+        //             template: this.config.template,
+        //             variables: { config: this.config },
+        //             entity_ids: this.config.entity_ids,
+        //         }
+        //     );
+        // }
     }
 
     getCardSize() {
