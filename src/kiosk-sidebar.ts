@@ -94,28 +94,26 @@ class KioskSidebar extends LitElement {
 
     _buildHtmlMenu(menu) {
         return html`
-            <ul class="sidebarMenu">
-                ${menu.map(menuItem => {
-                    return html`
+            ${menu.map(menuItem => {
+                return html`
                     <li @click="${(e) => this._menuAction(e)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
                     <span>${menuItem.name}</span>
                     ${menuItem.icon
-                            ? html`
-                            <ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>
-                        `
+                            ? html`<ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>
+                            `
                             : html``}
                     </li>
                 `;
-                })}
-            </ul>
-            `;
+            })}
+        `;
     }
 
     _renderMenu(sidebarMenu) {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
-            const menuElement = document.createElement("div");
+            const menuElement = document.createElement("ul");
+            menuElement.classList.add( "sidebarMenu" );
             menuElement.innerHTML = htmlMenu.getHTML();
 
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
@@ -124,10 +122,6 @@ class KioskSidebar extends LitElement {
     }
 
     _renderCard(card) {
-        // var card = {
-        //     type: entry.type,
-        // };
-        // card = Object.assign({}, card, entry.cardOptions);
         log2console('firstUpdated', 'Card: ', card);
         if (!card || typeof card !== 'object' || !card.type) {
             error2console('firstUpdated', 'Card config error!');
@@ -190,7 +184,8 @@ class KioskSidebar extends LitElement {
                 if (entry.type == "sidebarMenu") {
                     this._renderMenu(entry)
                 } else {
-                    setTimeout(() => this._renderCard(entry), 2);
+                    //setTimeout(() => this._renderCard(entry), 2);
+                    this._renderCard(entry)
                 }
             });
         }
