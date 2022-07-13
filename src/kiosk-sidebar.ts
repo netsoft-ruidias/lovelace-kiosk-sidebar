@@ -119,7 +119,7 @@ class KioskSidebar extends LitElement {
 
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
             //sidebarInner.appendChild(menuElement);
-            sidebarInner.insertAdjacentHTML("beforeend", htmlMenu);
+            sidebarInner.insertAdjacentHTML("beforeend", htmlMenu.getHTML());
         }
     }
 
