@@ -120,11 +120,11 @@ class KioskSidebar extends LitElement {
         }
     }
 
-    _renderCard(entry) {
-        var card = {
-            type: entry.type,
-        };
-        card = Object.assign({}, card, entry.cardOptions);
+    _renderCard(card) {
+        // var card = {
+        //     type: entry.type,
+        // };
+        // card = Object.assign({}, card, entry.cardOptions);
         log2console('firstUpdated', 'Card: ', card);
         if (!card || typeof card !== 'object' || !card.type) {
             error2console('firstUpdated', 'Card config error!');
@@ -141,20 +141,20 @@ class KioskSidebar extends LitElement {
             sidebarInner.appendChild(cardElement);
             provideHass(cardElement);
 
-            if (entry.cardStyle && entry.cardStyle != '') {
-                let style = entry.cardStyle;
-                let itterations = 0;
-                let interval = setInterval(() => {
-                    if (cardElement && cardElement.shadowRoot) {
-                        window.clearInterval(interval);
-                        var styleElement = document.createElement('style');
-                        styleElement.innerHTML = style;
-                        cardElement.shadowRoot.appendChild(styleElement);
-                    } else if (++itterations === 10) {
-                        window.clearInterval(interval);
-                    }
-                }, 100);
-            }
+            // if (entry.cardStyle && entry.cardStyle != '') {
+            //     let style = entry.cardStyle;
+            //     let itterations = 0;
+            //     let interval = setInterval(() => {
+            //         if (cardElement && cardElement.shadowRoot) {
+            //             window.clearInterval(interval);
+            //             var styleElement = document.createElement('style');
+            //             styleElement.innerHTML = style;
+            //             cardElement.shadowRoot.appendChild(styleElement);
+            //         } else if (++itterations === 10) {
+            //             window.clearInterval(interval);
+            //         }
+            //     }, 100);
+            // }
         }
     }
 
