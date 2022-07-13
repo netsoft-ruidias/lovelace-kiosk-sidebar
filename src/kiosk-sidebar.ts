@@ -19,7 +19,7 @@ class KioskSidebar extends LitElement {
     config: any;
     hass: any;
     shadowRoot: any;
-    renderCard: any;
+    //renderCard: any;
     templateLines: any = [];
 
     twelveHourVersion = false;
