@@ -104,10 +104,20 @@ class KioskSidebar extends LitElement {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
             console.log("htmlMenu", "sidebarMenu.menu", sidebarMenu.menu);
 
-            const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
+            //const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
+            const ulElement = document.createElement(`ul`);
+            ulElement.classList.add('sidebarMenu');
+
+            sidebarMenu.menu.forEach(menuItem => {
+                const liElement = document.createElement(`li`);
+                liElement.classList.add(menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : '');
+                liElement.innerHTML = "<span>${menuItem.name}</span>"
+                
+                ulElement.appendChild(liElement);
+            });
 
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
-            sidebarInner.insertAdjacentHTML("beforeend", htmlMenu.getHTML());
+            sidebarInner.insertAdjacentHTML("beforeend", ulElement);
         }
     }
 
