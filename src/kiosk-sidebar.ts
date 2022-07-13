@@ -187,7 +187,7 @@ class KioskSidebar extends LitElement {
                 if (entry.type == "sidebarMenu") {
                     this._renderMenu(entry)
                 } else {
-                    setTimeout(() => this.renderCard(entry), 2);
+                    setTimeout(() => this._renderCard(entry), 2);
                 }
             });
         }
