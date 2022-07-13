@@ -85,6 +85,7 @@ class KioskSidebar extends LitElement {
     _buildHtmlMenu(menu) {
         return html`
             ${menu.map(menuItem => {
+                console.log("_buildHtmlMenu", menuItem);
                 return html`
                     <li @click="${(e) => this._menuAction(e)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
                     <span>${menuItem.name}</span>
@@ -100,6 +101,9 @@ class KioskSidebar extends LitElement {
 
     _renderMenu(sidebarMenu) {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
+            console.log("htmlMenu", sidebarMenu);
+            console.log("htmlMenu", sidebarMenu.menu);
+
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
             const menuElement = document.createElement(`ul`);
