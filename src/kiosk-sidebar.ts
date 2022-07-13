@@ -74,26 +74,7 @@ class KioskSidebar extends LitElement {
             }
             
             <div class="sidebar-inner">
-        
-                ${sidebarMenu && sidebarMenu.length > 0
-                ? html`
-                <ul class="sidebarMenu">
-                    ${sidebarMenu.map((sidebarMenuItem) => {
-                    return html`
-                        <li @click="${(e) => this._menuAction(e)}" class="${sidebarMenuItem.state && this.hass.states[sidebarMenuItem.state].state != 'off' && this.hass.states[sidebarMenuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${sidebarMenuItem.action}" data-path="${sidebarMenuItem.navigation_path ? sidebarMenuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(sidebarMenuItem)}">
-                        <span>${sidebarMenuItem.name}</span>
-                        ${sidebarMenuItem.icon
-                            ? html`
-                                <ha-icon @click="${(e) => this._menuAction(e)}" icon="${sidebarMenuItem.icon}"></ha-icon>
-                            `
-                            : html``}
-                        </li>
-                    `;
-                })}
-                </ul>
-                `
-                : html``}
-
+            
             </div>`;
     }
 
@@ -111,12 +92,10 @@ class KioskSidebar extends LitElement {
         }
     }
 
-    _buildHtmlMenu(sidebarMenu) {
+    _buildHtmlMenu(menu) {
         return html`
-        ${sidebarMenu && sidebarMenu.length > 0
-                ? html`
             <ul class="sidebarMenu">
-                ${sidebarMenu.map((menuItem) => {
+                ${menu.map(menuItem => {
                     return html`
                     <li @click="${(e) => this._menuAction(e)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
                     <span>${menuItem.name}</span>
@@ -129,16 +108,16 @@ class KioskSidebar extends LitElement {
                 `;
                 })}
             </ul>
-            `
-                : html``}
-        `;
+            `;
     }
 
     _renderMenu(sidebarMenu) {
-        const htmlMenu = this._buildHtmlMenu(sidebarMenu);
+        if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
+            const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
-        var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
-        sidebarInner.appendChild(htmlMenu);
+            var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
+            sidebarInner.appendChild(htmlMenu);
+        }
     }
 
     _renderCard(entry) {
