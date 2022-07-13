@@ -82,42 +82,31 @@ class KioskSidebar extends LitElement {
         }
     }
 
+                // ${menu.map(menuItem => {
+                //     console.log("_buildHtmlMenu", menuItem);
+                //     // return html`
+                //     //     <li @click="${x => this._menuAction(x)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
+                //     //         <span>${menuItem.name}</span>
+                //     //         ${menuItem.icon
+                //     //             ? html`<ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>`
+                //     //             : html``}
+                //     //     </li>`;
+                //     return html`<li>${menuItem.name}</li>`;
+                // })}
+
     _buildHtmlMenu(menu) {
-        return html`
-            <ul class="sidebarMenu">
-                ${menu.map(menuItem => {
-                    console.log("_buildHtmlMenu", menuItem);
-                    // return html`
-                    //     <li @click="${x => this._menuAction(x)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
-                    //         <span>${menuItem.name}</span>
-                    //         ${menuItem.icon
-                    //             ? html`<ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>`
-                    //             : html``}
-                    //     </li>`;
-                    return html`<li>${menuItem.name}</li>`;
-                })}
-            </ul>
-        `;
+        return html`<ul class="sidebarMenu">
+                ${menu.map(x => html`<li>${x.name}</li>`)}
+            </ul>`;
     }
 
     _renderMenu(sidebarMenu) {
         if (sidebarMenu && sidebarMenu.menu && sidebarMenu.menu.length > 0) {
-            console.log("htmlMenu", "sidebarMenu", sidebarMenu);
             console.log("htmlMenu", "sidebarMenu.menu", sidebarMenu.menu);
 
             const htmlMenu = this._buildHtmlMenu(sidebarMenu.menu);
 
-            //const menuElement = document.createElement(`ul`);
-            //menuElement.classList.add( "sidebarMenu" );
-
-            console.log("htmlMenu TemplateResult:", htmlMenu);
-            console.log("htmlMenu new:", htmlMenu.getHTML());
-
-            //menuElement.insertAdjacentHTML("beforeend", htmlMenu.getHTML());
-            //menuElement.innerHTML = htmlMenu.getHTML();
-
             var sidebarInner = this.shadowRoot.querySelector('.sidebar-inner');
-            //sidebarInner.appendChild(menuElement);
             sidebarInner.insertAdjacentHTML("beforeend", htmlMenu.getHTML());
         }
     }
