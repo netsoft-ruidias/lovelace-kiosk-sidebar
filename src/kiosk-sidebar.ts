@@ -87,13 +87,14 @@ class KioskSidebar extends LitElement {
             <ul class="sidebarMenu">
                 ${menu.map(menuItem => {
                     console.log("_buildHtmlMenu", menuItem);
-                    return html`
-                        <li @click="${x => this._menuAction(x)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
-                            <span>${menuItem.name}</span>
-                            ${menuItem.icon
-                                ? html`<ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>`
-                                : html``}
-                        </li>`;
+                    // return html`
+                    //     <li @click="${x => this._menuAction(x)}" class="${menuItem.state && this.hass.states[menuItem.state].state != 'off' && this.hass.states[menuItem.state].state != 'unavailable' ? 'active' : ''}" data-type="${menuItem.action}" data-path="${menuItem.navigation_path ? menuItem.navigation_path : ''}" data-menuitem="${JSON.stringify(menuItem)}">
+                    //         <span>${menuItem.name}</span>
+                    //         ${menuItem.icon
+                    //             ? html`<ha-icon @click="${(e) => this._menuAction(e)}" icon="${menuItem.icon}"></ha-icon>`
+                    //             : html``}
+                    //     </li>`;
+                    return html`<li>${menuItem.name}</li>`;
                 })}
             </ul>
         `;
